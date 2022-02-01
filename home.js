@@ -4,10 +4,14 @@
 
 const array = [2,3,3,5,7,10];
 let sum = 0;
-const averageChecker = (x) => {
-    for(i = 0; i < x.length; i++){
-        sum += x[i] / x.length;
+// creating a function that takes in an array
+const averageChecker = (arr) => {
+    // the function then loops through the array
+    for(i = 0; i < arr.length; i++){
+        // while looping through the array the functiion adds the value of all the index's in the array and divides them by the array's length (how to get the average) and logs the answer to the sum variable
+        sum += arr[i] / arr.length;
     }
+    // the function then raetruns the value of sum
     return sum
 } 
 
@@ -38,6 +42,7 @@ console.log(averageChecker(array));
 
 
 const targretValChecker = (array,targetValue) => {
+    // indexOf already returns "-1" if the value passed through isn't in the array so this is just returning whatever the value of the regular indexOf function is within my created function
             return array.indexOf(targetValue);   
 };
 
@@ -74,20 +79,31 @@ console.log(targretValChecker(array1, 5));
 // [25,10,1]      amount = 96
 
 const coinChecker = (arr, amount) => {
+    // here we are sorting the array in decsending order so it starts with the largest coin firt and works it's way down
    sortedArray = arr.sort().reverse();
 //    [25,10,1]
-    //    assingning sum to 0
-    let sum = 0;
-    
+    //   numCoins is going to be the sum of the "target amount divided by the array index (value of a coin")
+    let numCoins = 0;                                                 
+    // balance is going to be the actual number of coins needed to get to the target value 
+    let balance = 0;
+    // here we are manipulating the amount variable to become the value of the remainder variable in the function
+    let remainder = amount;
     // looping through the array
    for(i = 0; i < arr.length; i++){   
-    //  at first arr[i] = 25 
-     sum += Math.floor(amount / arr[i])
-    //  sum = 96/25 on the first loop and is rounded down to = "3"
-    // sum = 96/25 on the first loop and is rounded down to = "3"
-    // sum = 96/25 on the first loop and is rounded down to = "3"
+    //    here we are using the math floor method to get the largest whole number from the sum of the equation
+    // we are dividing the traget amount by the array's index which will be the value of coins
+     numCoins = Math.floor(remainder / arr[i])
+    //  we then add the value of numCoins to the balance so it keeps track of the number of coins it has taken to get to the target value so far
+    balance += numCoins
+    // we then set the remainder value to keep track of how much we have left to acount for in the initial target value for example after finding out after adding three quarters together and getting 75 we then subtract 75 from 96 to get 21
+    remainder = remainder - (arr[i] * numCoins)
    }
-   return sum
+//    if the array passed through to the function has no more coin values to go through and the target value is greater then 0 it will return -1
+   if (remainder > 0){
+       return -1
+   }
+//    this will return the number of coins used to get to the target value
+   return balance
 }
 const array3 = [25,10,1];  // []
 console.log(coinChecker(array3, 96));
